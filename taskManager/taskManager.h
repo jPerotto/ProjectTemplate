@@ -5,6 +5,9 @@
 #include <FreeRTOS.h>
 #include "variaveis.h"
 
+#define CALLBACK_SIGNATURE void (*callback)(void *parameter)
+void doManagerTask(void *parameter);
+
 class managerTask
 {
 public:
@@ -22,9 +25,10 @@ public:
         uint32_t lastTimeResetWDT;
     } TaskManager_t;
 
-    managerTask();
+    managerTask(CALLBACK_SIGNATURE = doManagerTask);
     ~managerTask();
     void createTask(TaskManager_t taskCreate);
+    void inicializeTask(TaskManager_t *taskCreate);
     void startTask(int8_t err, const char *task);
     void checkIntegrityFirmware(const char *nameFunction);
 

@@ -5,7 +5,6 @@
 #include <FreeRTOS.h>
 #include "../taskManager/taskManager.h"
 
-#define CALLBACK_SIGNATURE void (*callback)(void *parameter)
 void doLedTask(void *parameter);
 
 class taskLed : public managerTask

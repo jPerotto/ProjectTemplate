@@ -1,9 +1,11 @@
 #include "taskManager.h"
 
-managerTask::managerTask()
+managerTask::managerTask(CALLBACK_SIGNATURE)
 {
     _nTask = NULL;
-    // _taskManager = new TaskManager_t[_nTask];
+    _taskManager = new TaskManager_t;
+    *_taskManager = TaskManager_t{callback, "doManagerTask", 4096, NULL, 3, NULL, APP_CPU_NUM, TASK_CREATE, TASK_OFF, NULL};
+    this->inicializeTask(_taskManager);
 }
 
 managerTask::~managerTask()
@@ -21,16 +23,21 @@ void managerTask::createTask(TaskManager_t taskCreate)
 
     delete[] _taskManager;
     _taskManager = temp;
-    _taskManager[_nTask-1] = taskCreate;
+    _taskManager[_nTask - 1] = taskCreate;
+    this->inicializeTask(&taskCreate);
+}
+
+void managerTask::inicializeTask(TaskManager_t *taskCreate)
+{
     startTask(xTaskCreatePinnedToCore(
-        taskCreate.pvTaskCode,
-        taskCreate.pcName,
-        taskCreate.usStackDepth,
-        taskCreate.pvParameters,
-        taskCreate.uxPriority,
-        taskCreate.xHandleTask,
-        taskCreate.xCoreID),
-        taskCreate.pcName);
+                  taskCreate->pvTaskCode,
+                  taskCreate->pcName,
+                  taskCreate->usStackDepth,
+                  taskCreate->pvParameters,
+                  taskCreate->uxPriority,
+                  taskCreate->xHandleTask,
+                  taskCreate->xCoreID),
+              taskCreate->pcName);
 }
 
 void managerTask::checkIntegrityFirmware(const char *nameFunction)
@@ -56,4 +63,12 @@ void managerTask::startTask(int8_t err, const char *task)
         // LOGd_TASK("%s created %d FreeRam %s", task, err, String(ESP.getFreeHeap()).c_str());
         checkIntegrityFirmware(task);
     }
+}
+
+void doManagerTask(void *parameter)
+{
+    do
+    {
+
+    } while (true);
 }
