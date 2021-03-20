@@ -12,7 +12,7 @@ class taskLed : public managerTask
 public:
     taskLed(CALLBACK_SIGNATURE = doLedTask);
     ~taskLed();
-    managerTask::TaskManager_t taskCreate;
+    managerTask::TaskManager_t *taskCreate;
 
 private:
     TaskHandle_t _taskHandle = NULL;

@@ -27,7 +27,8 @@ public:
 
     managerTask(CALLBACK_SIGNATURE = doManagerTask);
     ~managerTask();
-    void createTask(TaskManager_t taskCreate);
+    void addTask(TaskManager_t *taskCreate);
+    void createTask(TaskManager_t *taskCreate);
     void inicializeTask(TaskManager_t *taskCreate);
     void startTask(int8_t err, const char *task);
     void checkIntegrityFirmware(const char *nameFunction);

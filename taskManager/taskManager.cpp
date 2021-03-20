@@ -12,7 +12,12 @@ managerTask::~managerTask()
 {
 }
 
-void managerTask::createTask(TaskManager_t taskCreate)
+void managerTask::addTask(TaskManager_t *taskCreate)
+{
+    this->createTask(taskCreate);
+}
+
+void managerTask::createTask(TaskManager_t *taskCreate)
 {
     TaskManager_t *temp = new TaskManager_t[_nTask];
     for (uint8_t xTask = 0; xTask < _nTask; xTask++)
@@ -23,8 +28,8 @@ void managerTask::createTask(TaskManager_t taskCreate)
 
     delete[] _taskManager;
     _taskManager = temp;
-    _taskManager[_nTask - 1] = taskCreate;
-    this->inicializeTask(&taskCreate);
+    _taskManager[_nTask - 1] = *taskCreate;
+    this->inicializeTask(taskCreate);
 }
 
 void managerTask::inicializeTask(TaskManager_t *taskCreate)
