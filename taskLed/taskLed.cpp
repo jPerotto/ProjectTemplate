@@ -1,11 +1,12 @@
 #include "taskLed.h"
 
-taskLed::taskLed(CALLBACK_SIGNATURE)
+taskLed::taskLed(managerTask taskManager, CALLBACK_SIGNATURE)
 {
-    *taskCreate = managerTask::TaskManager_t{callback, "doLedTask", 8192, NULL, 1, &_taskHandle, APP_CPU_NUM, TASK_CREATE, TASK_OFF, NULL};
+    *taskInfo = managerTask::TaskManager_t{callback, "doLedTask", 8192, (void *)this, 1, &_taskHandle, APP_CPU_NUM, TASK_CREATE, TASK_OFF, NULL};
+    _taskManager = taskManager;
 }
 
-taskLed::~taskLed() 
+taskLed::~taskLed()
 {
 }
 
@@ -13,5 +14,7 @@ void doLedTask(void *parameter)
 {
     do
     {
+        taskLed *ledTask = (taskLed *)parameter;
+        ledTask->_taskManager.checkIntegrityFirmware(ledTask->taskInfo->pcName);
     } while (true);
 }

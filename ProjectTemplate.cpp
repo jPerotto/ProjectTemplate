@@ -6,17 +6,19 @@ void setup()
   hardware.serialBegin();
   notify.ledNotify();
 
-  taskLed.createTask(taskLed.taskCreate);
+  managerTask.createTask(taskLed.taskInfo);
 
   Serial.println("SETUP OK");
 }
 
 void loop()
 {
-  sensor_hal.sensorTemperature();
-  dataBase.setTemperaturaSensor(sensor_hal.getSensorValue());
-  dataBase.setSensacaoTermica(sensor_hal.sensacaoTermica());
+  sensor_hal.updateSensor();
+  dataTemp.setTemperaturaSensor(sensor_hal.getSensorValue());
+  dataTemp.setSensacaoTermica(sensor_hal.sensacaoTermica());
 
-  Serial.printf("Sensor temperatura %d-%d\n", sensor_hal.getSensorValue(), dataBase.getTemperaturaSensor());
-  Serial.printf("Sensacao %d-%d\n", sensor_hal.sensacaoTermica(), dataBase.getSensacaoTermica());
+  dataBase.inputDataToBase(dataTemp.getPathTemp(), dataTemp.getStrDataTemperature());
+
+  Serial.printf("Sensor temperatura %d-%d\n", sensor_hal.getSensorValue(), dataTemp.getTemperaturaSensor());
+  Serial.printf("Sensacao %d-%d\n", sensor_hal.sensacaoTermica(), dataTemp.getSensacaoTermica());
 }

@@ -3,7 +3,7 @@
 /**
  * @brief FAZ A LEITURA DO SENSOR FAKE E SALVA EM _valorSensor
 */
-void sensor_hal::sensorTemperature(void)
+void sensor_hal::updateSensor(void)
 {
   _valorSensor = random(0, 100);
 }
