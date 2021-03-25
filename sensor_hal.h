@@ -13,7 +13,7 @@ enum sensacao_t
 class sensor_hal
 {
 public:
-    void sensorTemperature(void);
+    void updateSensor(void);
     uint8_t getSensorValue(void);
     uint8_t sensacaoTermica(void);
 

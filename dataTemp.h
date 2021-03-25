@@ -3,6 +3,9 @@
 
 #include <Arduino.h> //LIB PADRAO DO FRAMEWORK ARDUINO
 
+#define SEMI_COLON ";"
+#define PATH_TEMPERATURE "/temperature.CSV"
+
 /* ESTRUTURA DE DADOS PARA TEMPERATURAS */
 typedef struct TEMPERATURA_DATA
 {
@@ -14,18 +17,25 @@ typedef struct TEMPERATURA_DATA
 typedef struct DATA_BASE
 {
     temperaturaData_t temperaturaData;
-} dataBase_t;
+} dataTemp_t;
 
-class dataBase
+class dataTemp
 {
 public:
     void setTemperaturaSensor(uint8_t temperatura);
     uint8_t getTemperaturaSensor(void);
+    char *getStrDataTemperature(void);
+    char *getPathTemp(void);
+
     void setSensacaoTermica(uint8_t sensacaoTermica);
     uint8_t getSensacaoTermica(void);
 
 protected:
-    dataBase_t _dataBase;
+    dataTemp_t _dataBase;
+
+private:
+    void semiColon(String *data);
+    void bufferingDataString(char *dataBufString, String *dataString);
 };
 
 #endif

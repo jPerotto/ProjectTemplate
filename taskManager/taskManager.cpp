@@ -12,12 +12,7 @@ managerTask::~managerTask()
 {
 }
 
-void managerTask::addTask(TaskManager_t *taskCreate)
-{
-    this->createTask(taskCreate);
-}
-
-void managerTask::createTask(TaskManager_t *taskCreate)
+void managerTask::createTask(TaskManager_t *taskInfo)
 {
     TaskManager_t *temp = new TaskManager_t[_nTask];
     for (uint8_t xTask = 0; xTask < _nTask; xTask++)
@@ -28,21 +23,21 @@ void managerTask::createTask(TaskManager_t *taskCreate)
 
     delete[] _taskManager;
     _taskManager = temp;
-    _taskManager[_nTask - 1] = *taskCreate;
-    this->inicializeTask(taskCreate);
+    _taskManager[_nTask - 1] = *taskInfo;
+    this->inicializeTask(taskInfo);
 }
 
-void managerTask::inicializeTask(TaskManager_t *taskCreate)
+void managerTask::inicializeTask(TaskManager_t *taskInfo)
 {
     startTask(xTaskCreatePinnedToCore(
-                  taskCreate->pvTaskCode,
-                  taskCreate->pcName,
-                  taskCreate->usStackDepth,
-                  taskCreate->pvParameters,
-                  taskCreate->uxPriority,
-                  taskCreate->xHandleTask,
-                  taskCreate->xCoreID),
-              taskCreate->pcName);
+                  taskInfo->pvTaskCode,
+                  taskInfo->pcName,
+                  taskInfo->usStackDepth,
+                  taskInfo->pvParameters,
+                  taskInfo->uxPriority,
+                  taskInfo->xHandleTask,
+                  taskInfo->xCoreID),
+              taskInfo->pcName);
 }
 
 void managerTask::checkIntegrityFirmware(const char *nameFunction)
@@ -54,7 +49,7 @@ void managerTask::checkIntegrityFirmware(const char *nameFunction)
     }
 }
 
-void managerTask::startTask(int8_t err, const char *task)
+void managerTask::startTask(int8_t err, const char *taskName)
 {
     if (err != pdTRUE)
     {
@@ -66,7 +61,7 @@ void managerTask::startTask(int8_t err, const char *task)
     else
     {
         // LOGd_TASK("%s created %d FreeRam %s", task, err, String(ESP.getFreeHeap()).c_str());
-        checkIntegrityFirmware(task);
+        checkIntegrityFirmware(taskName);
     }
 }
 
@@ -74,6 +69,5 @@ void doManagerTask(void *parameter)
 {
     do
     {
-
     } while (true);
 }

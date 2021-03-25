@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/perotto/Arduino/hardware/espressif/esp32/**",
+                "/home/perotto/BRISTOM/ProjectTemplate/taskManager/**",
+                "/home/perotto/BRISTOM/ProjectTemplate/taskLed/**",
+                "/home/perotto/BRISTOM/ProjectTemplate/xQueueTask/**",
+                "/home/perotto/BRISTOM/ProjectTemplate/dataBase/**"
+            ],
+            "forcedInclude": [],
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14"
+        }
+    ],
+    "version": 4
+}
